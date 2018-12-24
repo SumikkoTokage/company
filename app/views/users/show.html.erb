@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="skippr.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>マイページ</h1>
+	<div class="body">
+		<div class="profile container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class=profile-box>
+						<%= link_to "topページへ戻る", root_path %>
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-info" style="text-align: center"><strong>ユーザープロフィール</strong></li>
+							<li class="list-group-item"><strong>ユーザーネーム</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= @user.nickname %></li>
+							<li class="list-group-item"><strong>メールアドレス</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @user.email %></li>
+							<% @user.address_lines.each do |address_line| %>
+							<li class="list-group-item"><strong>郵便番号</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;〒<%= address_line.postcode %></li>
+							<li class="list-group-item"><strong>都・道・府・県</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= address_line.prefecture_id %></li>
+							<li class="list-group-item"><strong>区・市・町・村</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= address_line.city %></li>
+							<li class="list-group-item"><strong>建物名・番地 </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= address_line.address %></li>
+							<% end %>
+						</ul>
+					</div>
+					<div>
+						<% if @user.id == current_user.id %>
+		        		<p><%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-success" %></p>
+		        		<% end %>
+					</div>
+					<div class="container">
+						<div class="row">
+							<h2>購入履歴</h2>
+							<table class="table table-striped">
+								<% @shopping_bags.each do |shopping_bag| %>
+								<tr>
+									<th>送付先</th>
+									<th>購入者</th>
+									<th>購入日</th>
+									<th></th>
+
+								</tr>
+								<tr>
+									<td>
+										<%= shopping_bag.address_line.name %>様
+										〒<%= shopping_bag.address_line.postcode %>
+										<%= shopping_bag.address_line.prefecture_id %>
+										<%= shopping_bag.address_line.city %>
+										<%= shopping_bag.address_line.address %>
+									</td>
+									<td>
+										<%= shopping_bag.user.first_name %><%= shopping_bag.user.last_name %>
+									</td>
+									<td><%= shopping_bag.created_at.strftime('%Y年%m月%d日') %></td>
+								</tr>
+								<tr>
+									<th>商品情報</th>
+									<th>購入枚数</th>
+									<th>発送ステータス</th>
+									<th>総計</th>
+								</tr>
+								
+									<% shopping_bag.bag_items.each do |bag_item| %>
+									<tr>
+										<td>
+											<%= bag_item.product.name %>
+											：<%= bag_item.purchase_price %>円
+
+										</td>
+										<td><%= bag_item.quantity %>点</td>
+										<td><%= bag_item.delivery_status_id %></td>
+									
+									<%end%>
+									<td><%= (shopping_bag.sum_total_price).to_i %>円</td>
+								</tr>
+								<%end%>
+							</table>
+						</div>
+					</div>
+					<div class="container">
+						<ul class="list-group">
+							<li  class="list-group-item list-group-item-info">お気に入り商品リスト</li>
+						</ul>
+						<div class="main-visual">
+    						<div class="theTarget">
+      							<% @product_favorites.each_with_index do |favorite,i| %>
+				                    <div class="col-xs-3">
+					                    <% if favorite.product.product_images.present? %>
+					                    	<% favorite.product.product_images.each do |image| %>
+						                      	<%= link_to product_path(favorite.product.id) do %>
+						                        <% end %>
+						                    <%end%>
+					                    <% else %>
+					                        <%= link_to product_path(favorite.product.product_images.id) do %>
+					                          	<img src="/assets/no_image.jpg", width="250", height="250">
+					                         <% end %>
+				                      	<% end %>
+		    					        <p><strong>商品名：</strong><%=favorite.product.name %></p>
+										<p><strong>価格：</strong>￥<%=favorite.product.price %>(税込み)</p>
+										<p><strong>SHOP：</strong><%=favorite.product.creator.shop_name %></p>
+		    				        </div>
+			    				<% end %>
+    						</div>
+						</div>
+						<ul class="list-group">
+							<li  class="list-group-item list-group-item-info">お気に入り投稿</li>
+						</ul>
+						<div class="main-visual">
+    						<div class="theTarget">
+      							<% @post_favorites.each_with_index do |favorite,i| %>
+      								<% if i % 4 == 0 %>
+          								<div class="slide">
+          							<% end %>
+				                    <div class="col-xs-3">
+			                      		<%= attachment_image_tag favorite.post, :image, :fill, 255, 255, format: 'jpeg' %></br>
+		    					        <p><%=favorite.post.body %></p>
+										<p><strong>クリエイター名：</strong><%=favorite.post.creator.name %></p>
+		    				        </div>
+		    				        <% if (i + 1) % 4 == 0 %>
+				    				 	</div>
+				    				 <% end %>
+				    				 <% if (i == @post_favorites.size - 1) && ((i + 1) % 4 != 0)%>
+				    				 	</div>
+				    				 <% end %>
+			    				<% end %>
+    						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="skippr.min.js"></script>
+	<script src="script.js"></script>
+</html>
+

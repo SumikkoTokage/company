@@ -1,0 +1,36 @@
+<%= render partial: 'products/header' %>
+  <div class="main clearfix">
+	<div class="main-content"><h1>住所一覧</h1>
+		<div class="container">
+			<div class="row">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>郵便番号</th>
+							<th>都道府県</th>
+							<th>区・市・町・村</th>
+							<th>建物名・番地</th>
+							<th>宛名</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @address_lines.each do |address_line| %>
+						<tr>
+							<td><%= address_line.postcode %></td>
+							<td><%= address_line.prefecture_id %></td>
+							<td><%= address_line.city %></td>
+							<td><%= address_line.address %></td>
+							<td><%= address_line.name %></td>
+							<td><%= link_to "edit", edit_address_line_path(address_line.id) %></td>
+							<td><%= link_to "destroy", address_line_path(address_line.id), method: :delete, "data-confirm" => "本当に消しますか？" %></td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+				<%= link_to "住所を新しく追加する", new_address_line_path %><br>
+				<%= link_to "カートに戻る", shopping_cart_path(@shopping_cart_id) %>
+			</div>
+		</div>
+	</div>
+  </div>
+  <%= render partial: 'products/footer' %>

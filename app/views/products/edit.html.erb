@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.scss">
+	<title></title>
+</head>
+<body>
+	<%= render partial: 'products/header' %>
+	<div class="main clearfix">
+		<div class="main-content">
+			<%= form_for(@product) do |f| %>
+			  <p>商品名：<%= f.text_field :name %></p>
+			  <p>商品説明文：<%= f.text_area :body %></p>
+			  <p>画像は１商品につき５枚まで投稿できます。</p>
+			  <p>商品画像１枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
+			  <p>商品画像２枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
+			  <p>商品画像３枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
+			  <p>商品画像４枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
+			  <p>商品画像５枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
+			  <p>価格：¥<%= f.number_field :price %></p>
+			  <p>在庫数：<%= f.number_field :stock_number %>個</p>
+	    	  <p>販売ステータス：
+			    <%= f.radio_button :sale_status_id, :販売中 %>
+			    <%= f.label :販売中 %>
+			    <%= f.radio_button :sale_status_id, :販売準備中 %>
+			    <%= f.label :販売準備中 %>
+			  </p>
+			  <p>カテゴリー：<%= f.select :category_id, Product.category_ids.keys, {prompt: '選択してください'} %></p>
+			  <p>配送方法：
+			  	<%= f.select :postage_list_id, Product.postage_list_ids.keys, {prompt: '選択してください'} %>
+	    	　</p>
+	    	  <p>送料：
+	    	  	<%= f.number_field :postage_price %>円
+	    	  </p>
+	    	  <%end%>
+			  <%= f.submit %>
+			<% end %>
+
+		</div>
+	</div>
+	<%= render partial: 'products/footer' %>
+
+
+
+	<script src="javascript/js/jquery-3.3.1.min.js"></script>
+	<script src="javascript/js/script.js"></script>
+</body>
+</html>

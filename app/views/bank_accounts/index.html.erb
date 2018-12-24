@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="skippr.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="col-lg-8">
+		<h1>売上振込先(銀行振込のみ)</h1>
+		<table  class="table table-striped">
+			<thead>
+				<tr>
+					<th>金融機関コード</th>
+					<th>金融機関名</th>
+					<th>支店コード</th>
+					<th>預金種別</th>
+					<th>口座番号</th>
+					<th>講座名義(カナ)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% if @creator.id == current_creator.id %>
+					<% @bank_accounts.each do |bank_account| %>
+						<tr>
+							<td><%= bank_account.bank_code %></td>
+							<td><%= bank_account.bank_name %></td>
+							<td><%= bank_account.branch_code_id %></td>
+							<td><%= bank_account.deposit_type_id %></td>
+							<td><%= bank_account.number %></td>
+							<td><%= bank_account.name %></td>
+							<td><%= link_to "edit", edit_bank_account_path(bank_account.id), class: "btn btn-default" %></td>
+						</tr>
+					<%end%>
+				<%end%>
+			</tbody>
+		</table>
+		<%=link_to "クリエイターページへ戻る", creator_path(@creator.id) %>
+	</div>
+</body>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="skippr.min.js"></script>
+	<script src="script.js"></script>
+</html>
+
+

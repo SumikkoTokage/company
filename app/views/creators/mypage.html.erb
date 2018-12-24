@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="skippr.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>マイページ</h1>
+	<div class="body">
+		<div class="profile container">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class=profile-box>
+						<%= link_to "topページへ戻る", root_path %>
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-info" style="text-align: center"><strong>クリエイタープロフィール</strong></li>
+							<li class="list-group-item"><strong>ユーザーネーム</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= @creator.name %></li>
+							<li class="list-group-item"><strong>電話番号</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @creator.telephone %></li>
+							<li class="list-group-item"><strong>SHOP名</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @creator.shop_name %></li>
+							<li class="list-group-item"><strong>SHOP説明</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @creator.description %></li>
+							<li class="list-group-item"><strong>発送日数</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @creator.send_date_id %>日以内に発送</li>
+						</ul>
+					</div>
+					<div>
+						<%=link_to "売上の振込先設定はこちら", bank_accounts_path(current_creator)  %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="skippr.min.js"></script>
+	<script src="script.js"></script>
+</html>

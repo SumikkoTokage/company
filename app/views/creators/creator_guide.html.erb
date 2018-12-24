@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<link rel="stylesheet" href="skippr.scss">
+        <link rel="stylesheet" href="style.scss">
+        <title></title>
+    </head>
+    <body>
+    	<div class="header">
+        <%= render partial: 'products/header' %>
+        </div>
+        <div class="main clearfix">
+            <div class="main-content">
+                <div class="container">
+                    <div class="row">
+                    <h1>クリエイターガイド</h1>
+                        <div class="ribbon_box">
+                            <div class="ribbon10">
+                                <h3>Welcome to Company!</h3>
+                            </div>
+                            <p></p>
+                            <p>クリエイターができることは主に商品の出品と投稿です。(新規登録必須)</p>
+                            <p>＜出品について＞</p>
+                            <p>自分が作成した商品にカテゴリや値段、商品名などをつけ出品！</p>
+                            <P>ユーザが購入したら発送をお願いします。</P>
+                        </div>
+                        <div class="creator-guide">
+                            <div class="box30">
+                                <div class="box-title">新規登録・ログイン</div>
+                                <p><a href="/creators/sign_up">新規登録</a></p>
+                                <% if creator_signed_in? %>
+                        			<p><%= link_to "ログアウト", destroy_creator_session_path, method: :delete %></p>
+                        		<%else%>
+                        			<p><a href="/creators/sign_in">ログイン</a></p>
+                        		<%end%>
+                            </div>
+                            <div class="box30">
+                                <div class="box-title">マイページ</div>
+                                <% if creator_signed_in? %>
+                                    <p><a href="/mypage">マイページ</a></p>
+                                <% end %>
+                            </div>
+                            <div class="box30">
+                                <div class="box-title">出品・投稿</div>
+                                <p><%=link_to "商品出品", new_product_path %></p>
+                                <p><%= link_to "投稿", new_post_path %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%= render partial: 'products/footer' %>
+    </body>
+</html>
+
+<style>
+/*見出し*/
+.ribbon_box {    
+    display: block;
+    position: relative;
+    margin: 15px auto;
+    padding: 10px 0;
+    width: 100%;
+    background: #f1f1f1;
+  }
+
+.ribbon10 {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    padding: 5px 0;
+    margin: 0 0 0 -20px;
+    width: calc(100% + 20px);
+    color: white;
+    background: #70a6ff;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.ribbon10 h3{
+    vertical-align: middle;
+    margin: 0;
+    padding: 0 30px 0 15px;
+    border-top: dashed 1px #FFF;
+    border-bottom: dashed 1px #FFF;
+    font-size: 20px;
+    line-height: 46px;
+}
+
+.ribbon10:after{
+    position: absolute;
+    content: '';
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: 0px;
+    height: 0px;
+    border-width: 30px 15px 30px 0px;
+    border-color: transparent #f1f1f1 transparent transparent;
+    border-style: solid;
+}
+
+.ribbon10:before {
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 0;
+    border: none;
+    border-bottom: solid 15px transparent;
+    border-right: solid 20px #6081b7;
+}
+/*box*/
+.creator-guide{
+    text-align: center;
+}
+.box30 {
+    margin: 2em 0;
+    background: #f1f1f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
+    width:calc(90% / 3);
+    float: left;
+    margin: 10px;
+}
+.box30 .box-title {
+    font-size: 1.2em;
+    background: #40BFB0;
+    padding: 4px;
+    text-align: center;
+    color: #FFF;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+.box30 p {
+    padding: 15px 20px;
+    margin: 0;
+}
+</style>

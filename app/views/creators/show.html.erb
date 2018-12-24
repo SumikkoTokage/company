@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<link rel="stylesheet" href="skippr.scss">
+        <link rel="stylesheet" href="style.scss">
+        <title></title>
+    </head>
+    <body>
+        <div class="header">
+        <%= render partial: 'products/header' %>
+        </div>
+         <div class="tabs">
+            <ul class="tabnav">
+                <li><a href="#tab01">商品一覧</a></li>
+                <li><a href="#tab02">クリエイター情報</a></li>
+            </ul>
+            <div class="tabcontent">
+                <div id="tab01">
+            		<div class="main clearfix">
+            		    <div class="main-content">
+            		        <h3><%= @creator.name %>の商品一覧</h3>
+                            <div class="main-content">
+                                <% if@products.present? %>
+                                    <% @products.each_with_index do |product| %>
+                                    <div class="product-box">
+                                        <% if @product_image.present? %>
+                                            <!-- 画像があるときは１枚目をここにひょうじ -->
+                                            <%= attachment_image_tag product_image, :product_images_images, :fill, 255, 255, format: 'jpeg' %>
+                                        <% else %>
+                                            <%= link_to product_path(product.id) do %>
+                                                <img src="assets/no_image.jpg", width="255", height="255">
+                                            <%end%>
+                                        <% end %>
+                                        <p><%= product.category_id %></p>
+                                        <p>商品名：<%= product.name %></p>
+                                        <p>クリエイター名：<%= product.creator.name %></p>
+                                        <p>¥<%= product.price %></p>
+                                    </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+            		    </div>
+            		</div>
+                </div>
+                <div id="tab02">
+                    <!-- <p><%#=link_to "フォロワー", followers_user_path(@user) %></p>
+                    <%# if user_signed_in? %>
+                          <%# if @creator.followed_by?(current_user) %>
+                            <p><%#=link_to "フォロー済み", creator_relationships_path(@creator.id), method: :delete %></p>
+                        <%# else %>
+                            <p><%#=link_to "フォローする", creator_relationships_path(@creator.id), method: :post %></p>
+                        <%# end %>
+                    <%# end %> -->
+                    <% @posts.each do |post| %>
+                        <div class="tweet-box">
+                            <%= attachment_image_tag post, :image, :fill, 255, 255, format: 'jpeg' %></br>
+                            <%= post.body %></br>
+                            <%= post.creator.name %></br>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+ 		<%= render partial: 'products/footer' %>
+        <script src="javascript/js/jquery-3.3.1.min.js"></script>
+        <script src="javascript/js/skippr.min.js"></script>
+        <script src="javascript/js/script.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('.tabcontent > div').hide();
+
+                $('.tabnav a').click(function () {
+                    $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+
+                    $('.tabnav a').removeClass('active');
+                    $(this).addClass('active');
+
+                    return false;
+                }).filter(':eq(0)').click();
+            });
+        </script>
+    </body>
+</html>
+
+
+
+

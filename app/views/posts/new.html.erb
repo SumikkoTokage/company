@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.scss">
+	<title></title>
+</head>
+<body>
+	<%= render partial: 'products/header' %>
+	<div class="main clearfix">
+		<div class="main-content">
+			<%= form_for(@post) do |f| %>
+				<div class="field">
+	      			<%= f.label :投稿入力 %><br />
+	      			<%= f.text_area :body %>
+		    	</div>
+		    	<div class="field">
+	      			<%= f.label :画像 %><br />
+	      			<%= f.attachment_field :image %>
+		    	</div>
+			  	<%= f.submit '投稿' %>
+			<% end %>
+
+		</div>
+	</div>
+	<%= render partial: 'products/footer' %>
+
+
+
+	<script src="javascript/js/jquery-3.3.1.min.js"></script>
+	<script src="javascript/js/script.js"></script>
+</body>
+</html>

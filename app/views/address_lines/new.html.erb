@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<%= render partial: 'products/header' %>
+  <div class="main clearfix">
+	<div class="main-content">
+		<h1>住所追加</h1>
+		<%= form_for (AddressLine.new) do |al| %>
+			<h4>郵便番号</h4>
+
+			<div class="field">
+	      		<%= al.label :郵便番号 %><br />
+	      		〒<%= al.text_field :postcode %>
+		    </div>
+		    <div class="field">
+		      	<%= al.label :都道府県 %><br />
+		      	<%= al.select :prefecture_id, AddressLine.prefecture_ids.keys, {prompt: '選択してください'} %>
+		    </div>
+		    <div class="field">
+		      	<%= al.label :市町村 %><br />
+		      	<%= al.text_field :city %>
+		    </div>
+		    <div class="field">
+		      	<%= al.label :住所 %><br />
+		      	<%= al.text_field :address %>
+		    </div>
+		    <div class="field">
+		      	<%= al.label :宛先氏名 %><br />
+		      	<%= al.text_field :name %>
+		    </div>
+		    <%= al.submit '登録' %>
+	 	<% end %>
+ 	</div>
+  </div>
+  <%= render partial: 'products/footer' %>
+</body>
+</html> 

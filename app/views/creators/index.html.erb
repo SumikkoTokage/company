@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<link rel="stylesheet" href="skippr.scss">
+        <link rel="stylesheet" href="style.scss">
+        <title></title>
+    </head>
+    <body>
+        <div class="header">
+        <%= render partial: 'products/header' %>
+        </div>
+		<div class="main clearfix">
+		    <div class="main-content">
+		        <h3>クリエイター一覧</h3>
+		        <% if@creators.present? %>
+		            <% @creators.each_with_index do |creator| %>
+		            <div class="product-box">
+		                <% if @creator_image.present? %>
+		                    <%= attachment_image_tag creator, :image, :fill, 255, 255, format: 'jpeg' %>
+		                <% else %>
+		                <%= link_to creator_path(creator.id) do %>
+		                    <img src="assets/no_image.jpg", width="255", height="255">
+		                <%end%>
+		                <% end %>
+		                <p>SHOP: <%= creator.shop_name %></p>
+		                <p>NAME: <%= creator.name %></p>
+		            </div>
+		            <% end %>
+		        <% end %>
+		    </div>
+		</div>
+ 		<%= render partial: 'products/footer' %>
+        <script src="javascript/js/jquery-3.3.1.min.js"></script>
+        <script src="javascript/js/skippr.min.js"></script>
+        <script src="javascript/js/script.js"></script>
+
+    </body>
+</html>
+

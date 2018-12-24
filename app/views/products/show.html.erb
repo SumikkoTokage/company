@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<link rel="stylesheet" href="skippr.scss">
+        <link rel="stylesheet" href="style.scss">
+        <title></title>
+    </head>
+    <body>
+        <div class="header">
+        <%= render partial: 'products/header' %>
+        </div>
+        <div class="main clearfix">
+    		<div class="main-content">
+        		<div class="row">
+	            	<div class="col-md-1"></div>
+	            	<div class="col-md-4">
+						<h1><%= @product.name %></h1>
+
+						<p>ここに画像いれたい</p>
+						<% if @product.product_images.present? %>
+						  <% @product.product_images.each do |image| %>
+						    <p></p>
+						  <% end %>
+						  <% else %>
+						    <img src="assets/no_image.jpg", width="255", height="255">
+						<% end %>
+					</div>
+
+					<div class="col-md-6">
+			            <table class="table table-striped">
+			                <thead>
+			                  	<tr>
+			                    	<h4>商品情報</h4>
+			                  	</tr>
+			                </thead>
+			                <tbody>
+			                	 <tr>
+			                    	<td>カテゴリ</td>
+			                    	<td><%= @product.category_id %></td>
+			                    	<td></td>
+			                    </tr>
+			                    <tr>
+			                      	<td>商品名</td>
+			                      	<td><%= @product.name %></td>
+			                      	<td></td>
+			                    </tr>
+			                    <tr>
+			                      	<td>商品説明</td>
+			                      	<td><%= @product.body %></td>
+			                      	<td></td>
+			                    </tr>
+			                    <tr>
+			                      	<td>価格（税込）</td>
+			                      	<td>￥<%= @product.price %></td>
+			                      	<td><% if @product.stock_number == 0 then %>SOLDOUT
+			                          	<% else %>
+			                          	<% @product.stock_number >= 1  %>在庫あり
+			                          	<% end %>
+			                      	</td>
+			                    </tr>
+			                    <tr>
+			                    	<td>配送方法</td>
+			                    	
+			                    		<td><%= @product.postage_list_id %></td>
+			                    		<td><%= @product.postage_price %>円</td>
+			                    
+			                    </tr>
+			                    <tr>
+			                    	<td>発送までの日数</td>
+			                    	<td><%= @product.creator.send_date_id %>日程度でお届け</td>
+			                    	<td></td>
+			                    </tr>
+			                </tbody>
+			            </table>
+			            <%= form_for(CartItem.new) do |f| %>
+                				<%= f.hidden_field :product_id, value: @product.id %>
+                				<button type="button" class="btn btn-danger btn-lg"><%= f.submit "カートに入れる" %></button>
+          				<% end %>
+			            <% if user_signed_in? %>
+		              		<button type="button" class="btn btn-warning btn-lg">
+			               		<% if !ProductFavorite.exists?(user_id:current_user.id,product_id:@product.id) %>
+			                		<%= link_to "お気に入り",product_add_path(@product),method: :post %>
+					    		<% else %>
+					    			<%= link_to "お気に入り解除",product_add_path(@product),method: :delete %>
+		                		<%end%>
+		                	</button>
+		            	<% else %>
+		            		<button type="button" class="btn btn-warning btn-lg">お気に入り</button>
+		            	<% end %>
+		            	<table class="table table-bordered">
+	                  		<thead>
+	                 			<tr>
+	                  				<h4>クリエイター情報</h4>
+	                  			</tr>
+	                		</thead>
+	                  		<tbody>
+	                    		<tr>
+	                      			<td>SHOP名</td>
+	                      			<td><%= @product.creator.shop_name %></td>
+	                    		</tr>
+	                			<tr>
+	                      			<td>クリエイター名</td>
+	                      			<td>
+                      				<%= link_to creator_path(@product.creator_id) do %>
+	                      				<%= @product.creator.name %>
+	                      			<%end%>
+                      				</td>
+	                    		</tr>
+	                  		</tbody>
+	              		</table>
+	            		<div class="col-md-1"></div>
+	        		</div>
+	        		<% if creator_signed_in? %>
+	        			<%if @product.creator_id == current_creator.id %>
+							<%= link_to "編集", edit_product_path(@product.id)%>
+							<%= link_to "削除", product_path(@product) , method: :delete, data: { confirm: "削除してよろしいですか？" } %>
+						<%end%>
+					<%end%>
+				</div>
+			</div>
+		</div>
+		<%= render partial: 'products/footer' %>
+        <script src="javascript/js/jquery-3.3.1.min.js"></script>
+        <script src="javascript/js/skippr.min.js"></script>
+        <script src="javascript/js/script.js"></script>
+    </body>
+</html>
+

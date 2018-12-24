@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="guide.css">
+	<title>初めての方はこちら</title>
+</head>
+<body>
+	  <%= render partial: 'products/header' %>
+<div class="main clearfix">
+    <div class="main-content">
+		<div class="container">
+			<div class="row">
+				<h1>はじめてガイド</h1>
+				<div class="guide1">
+				<h2>Campanyとは</h2>
+					<div class="caption">
+						<p>＜個人クリエイターとユーザを繋げるサイト＞</p>
+						<p>１点ものが欲しい、オリジナリティ溢れる作品と出会いたい・・・</p>
+						<p>コミケやデザフェスとっても気になるけど人混みが苦手、時間がないなど</p>
+						<p>自分好みなクリエイターと簡単に出会えるだけでなく、気に入った商品を購入することも可能なサイトです。</p>
+					</div>
+				</div>
+				<div class="guide2">
+					<h2>購入までの流れ</h2>
+					<div class="sub">
+						<h3>step1.欲しい商品カテゴリや、気になるクリエイターを探す</h3>
+						<div class="caption">
+							<p>クリエイターが出品している商品を探してみよう！</p>
+							<p>気になる商品はお気に入りに登録してマイページから確認もできます。(登録ユーザ)</p>
+						</div>
+					</div>
+					<div class="sub">
+						<h3>step2.ショッピングカートに商品を追加</h3>
+						<div class="caption">
+							<p>欲しい商品が見つかったらカートに追加するボタンをクリック！</p>
+							<p>忙しくて時間がないときも、24時間好きな時間にお買い求め頂けます！</p>
+						</div>
+					</div>
+					<div class="sub">
+						<h3>step3.購入ボタンをクリック！</h3>
+						<div class="caption">
+							<p>ショッピングが終わり、購入したい商品をカゴに入れたら、購入ボタンをクリック！</p>
+							<p>商品の発送状況はマイページからご確認頂けます。</p>
+							<p>※商品発送日数はクリエイターごとに異なります。(１〜７日以内程度)</p>
+						</div>
+					</div>
+				</div>
+				<div class="guide3">
+					<h2>ユーザーだけのおすすめ機能</h2>
+					<div class="sub">
+						<h3>お気に入り</h3>
+						<div class="caption">
+							<p>見つけた商品をまとめておける機能です。</p>
+							<p>画面にあるお気に入りボタンをクリックするだけで登録完了！</p>
+							<p>追加したものはマイページにある＜お気に入り商品一覧＞からご確認することができます。</p>
+						</div>
+					</div>
+				</div>
+				<div class="guide4">
+					<p>ユーザー専用機能は随時追加予定！</p>
+					<p>登録はこちら</p>
+					<p><button type="button" class="btn btn-warning btn-lg"><%= link_to "新規登録", new_user_session_path %></button></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+  <%= render partial: 'products/footer' %>
+</body>
+</html>

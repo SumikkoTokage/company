@@ -1,0 +1,29 @@
+<div class="footer">
+		<div class="footer-nav">
+			<p>ユーザ</p>
+			<ul class="footer-nav-list">
+				<% if user_signed_in? %>
+					<li class="footer-nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+				<% else %>
+					<li class="footer-nav-item"><a href="/users/sign_in">ログイン</a></li>
+				<% end %>
+				<li class="footer-nav-item"><a href="/users/sign_up">新規登録</a></li>
+				<li class="footer-nav-item"><a href="/user_guide">初めての方はこちら</a></li>
+				<% if user_signed_in? %>
+                  	<li class="footer-nav-item"><%= link_to 'マイページ', user_path(current_user.id) %></a></li>
+                <% end %>
+			</ul>
+			<p>クリエイター</p>
+			<ul class="footer-nav-list">
+				<% if creator_signed_in? %>
+					<li class="footer-nav-item"><%= link_to "ログアウト", destroy_creator_session_path, method: :delete %></li>
+				<% else %>
+					<li class="footer-nav-item"><a href="/creators/sign_in">ログイン</a></li>
+				<% end %>
+				<li class="footer-nav-item"><a href="/creators/sign_up">新規登録</a></li>
+				<li class="footer-nav-item"><a href="/creator_guide">クリエイターの方はこちら</a></li>
+				<li class="footer-nav-item"><a href="/creators">クリエイター一覧</a></li>
+			</ul>
+		</div>
+		<p class="footer-text">Company</p>
+</div>	

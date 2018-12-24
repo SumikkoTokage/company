@@ -1,0 +1,45 @@
+<div class="header clear-fix" style = "margin-bottom: 10px">
+	<h1 class="header-top">
+		Company
+	</h1>
+	<nav>
+		<ul class="nav-list">
+			<li class="nav-list-item"><a href="/">HOME</a></li>
+			<li class="nav-list-item"><a href="/creators">CREATOR一覧</a></li>
+			<% if user_signed_in? %>
+				<li class="nav-list-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+			<%else%>
+				<li class="nav-list-item"><a href="/users/sign_in">ログイン</a></li>
+			<%end%>
+
+			<li class="nav-list-item"><a href="/users/sign_up">新規登録</a></li>
+			<li class="nav-list-item"><a href="/user_guide">初めての方はこちら</a></li>
+			<li class="nav-list-item"><%= link_to "クリエイターの方はこちら", creator_guide_path %></li>
+			<% if user_signed_in? %>
+              <li class="nav-list-item"><%= link_to 'マイページ', user_path(current_user.id) %></a></li>
+            <% end %>
+		</ul>
+	</nav>
+	<div class="header-bottom">
+		 <% if  user = current_user %>
+			<button class="square_btn">
+				<%=link_to "ショッピングカート", shopping_cart_path(current_user.shopping_cart.id) %>
+			</button>
+		<% else %>
+			<div class="balloonoya square_btn" onclick="showBalloon()">ショッピングカート
+				<span class="balloon1" id="makeImg">ログインすると閲覧できます</span>
+			</div>
+		<%end%>
+	</div>
+</div>
+
+<script>
+	function showBalloon(){
+		var wObjballoon	= document.getElementById("makeImg");
+		if (wObjballoon.className == "balloon1"){
+			wObjballoon.className = "balloon";
+		}else{
+			wObjballoon.className = "balloon1";
+		}
+	}
+</script>

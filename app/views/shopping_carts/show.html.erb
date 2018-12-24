@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>カートの中身</title>
+</head>
+<body>
+	<%= render partial: 'products/header' %>
+  <div class="main clearfix">
+	<div class="main-content">
+      	<div class="row">
+			<h1>ショッピングカート</h1>
+
+			<div class="cart_button">
+				<%= link_to "ショッピングを続ける", products_path %>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<th></th>
+					<th>商品名</th>
+					<th>価格</th>
+					<th>購入数</th>
+					<th></th>
+					<th>合計</th>
+					<th></th>
+				</tr>
+				<% @cart_items.each do |cart_item| %>
+					<tr>
+						<td></td>
+					    <td><%= cart_item.product.name %></td>
+					    <td><%= cart_item.product.price %>円</td>
+					    <%= form_for(cart_item) do |f| %>
+					    	<div class="field">
+					    		<td><%= f.number_field :quantity, min: 1 %></td>
+					    		<td><%= f.submit "購入数を変更する" %></td>
+					    	</div>
+					   	<%end%>
+					   	<td><%= (cart_item.product.price).to_i * cart_item.quantity %></td>
+					    <td><%= link_to "カートから削除", cart_item_path(cart_item.id), method: :delete, "data-confirm" => "本当に消しますか？" %></td>
+					</tr>
+				<% end %>
+			</table>
+			<div class="sum_price">
+				<% %>
+				<h3>合計：<%= (@shopping_cart.sum_total_price).to_i %>円</h3>
+			</div>
+			
+			<div class="address_lines">
+				<h2>お届け先</h2>
+				<table class="table table-striped">
+					<tr>
+						<th></th>
+						<th>購入者</th>
+						<th>郵便番号</th>
+						<th>都道府県</th>
+						<th>市町村</th>
+						<th>以下住所</th>
+						<th>宛先氏名</th>
+					</tr>
+					<%= form_tag('/confirmation', :method => :get) do %>
+						<% @address_lines.each do |address_line| %>
+							<tr>
+								<div class="field">
+									<td><%= check_box 'address_line','address_line_id', {:checked => false}, address_line.id, false %></td>
+								</div>
+								<td><%= address_line.user.nickname %></td>
+							    <td><%= address_line.postcode %></td>
+							    <td><%= address_line.prefecture_id%></td>
+							    <td><%= address_line.city %></td>
+							    <td><%= address_line.address %></td>
+							    <td><%= address_line.name %></td>
+							</tr>
+						<%end%>
+						<%= submit_tag "確認画面へ進む" %>
+					<%end%>
+				</table>
+				<button><%= link_to "届け先住所を変更する", address_lines_path(current_user) %></button>
+			</div>
+		</div>
+	</div>
+  </div>
+  <%= render partial: 'products/footer' %>
+
+</body>
+</html>
+

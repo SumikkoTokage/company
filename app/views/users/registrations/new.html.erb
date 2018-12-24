@@ -1,0 +1,70 @@
+<h2>新規登録</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :メールアドレス %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "○○○@gmail.com"  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :ニックネーム %><br />
+    <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", placeholder: "ニックネーム" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :性別 %><br />
+    <%= f.label :男性 %>
+    <%= f.radio_button :gender, :男性 %>
+    <%= f.label :女性 %>
+    <%= f.radio_button :gender, :女性 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :アイコン %><br />
+    <%= f.attachment_field :image %>
+  </div>
+
+  <%= f.fields_for :address_lines, AddressLine.new do |al| %>
+    <div class="field">
+      <%= al.label :郵便番号 %><br />
+      〒<%= al.text_field :postcode, autocomplete: "postcode", placeholder: "○○○-○○○○" %>
+    </div>
+    <div class="field">
+      <%= al.label :都道府県 %><br />
+      <%= al.select :prefecture_id, AddressLine.prefecture_ids.keys, {prompt: '選択してください'} %>
+    </div>
+    <div class="field">
+      <%= al.label :市町村 %><br />
+      <%= al.text_field :city, autocomplete: "city", placeholder: "○○市" %>
+    </div>
+    <div class="field">
+      <%= al.label :住所 %><br />
+      <%= al.text_field :address, autocomplete: "address", placeholder: "○○1-1-1" %>
+    </div>
+    <div class="field">
+      <%= al.label :宛先氏名 %><br />
+      <%= al.text_field :name, autocomplete: "name", placeholder: "宛先氏名" %>
+    </div>
+  <%end%>
+
+  <div class="field">
+    <%= f.label :パスワード %><br />
+    <%= f.password_field :password, autocomplete: "new-password", placeholder: "6文字以上の半角英字" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :パスワード確認 %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "パスワード確認" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "新規登録" %>
+  </div>
+  <div class="actions">
+    <%= link_to '戻る', root_path %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>
