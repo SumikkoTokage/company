@@ -29,7 +29,7 @@
                                             <%= attachment_image_tag product_image, :product_images_images, :fill, 255, 255, format: 'jpeg' %>
                                         <% else %>
                                             <%= link_to product_path(product.id) do %>
-                                                <img src="assets/no_image.jpg", width="255", height="255">
+                                                <img src="images/no_image.jpg", width="255", height="255">
                                             <%end%>
                                         <% end %>
                                         <p><%= product.category_id %></p>

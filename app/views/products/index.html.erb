@@ -17,11 +17,11 @@
         <%end%>
         <div class="index">
             <div class="theTarget">
-                <div style="background-image: url(assets/test1.jpg)"></div>
-                <div style="background-image: url(assets/test2.jpg)"></div>
-                <div style="background-image: url(assets/test3.jpg)"></div>
-                <div style="background-image: url(assets/test4.jpg)"></div>
-                <div style="background-image: url(assets/test5.jpg)"></div>
+                <div style="background-image: url(images/test1.jpg)"></div>
+                <div style="background-image: url(images/test2.jpg)"></div>
+                <div style="background-image: url(images/test3.jpg)"></div>
+                <div style="background-image: url(images/test4.jpg)"></div>
+                <div style="background-image: url(images/test5.jpg)"></div>
             </div>
             <div class="tabs">
                 <ul class="tabnav">
@@ -41,7 +41,7 @@
                                             <%= attachment_image_tag product, :product_images_images, :fill, 255, 255, format: 'jpeg' %>
                                         <% else %>
                                         <%= link_to product_path(product.id) do %>
-                                            <img src="assets/no_image.jpg", width="255", height="255">
+                                            <img src="images/no_image.jpg", width="255", height="255">
                                         <%end%>
                                         <% end %>
                                         <p><%= product.category_id %></p>
