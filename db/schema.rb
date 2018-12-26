@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_23_063951) do
+ActiveRecord::Schema.define(version: 2018_12_22_153041) do
 
   create_table "address_lines", force: :cascade do |t|
     t.integer "user_id"
@@ -127,13 +127,6 @@ ActiveRecord::Schema.define(version: 2018_12_23_063951) do
     t.integer "creator_id"
     t.integer "postage_list_id"
     t.integer "postage_price"
-  end
-
-  create_table "relationships", force: :cascade do |t|
-    t.integer "following_id"
-    t.integer "follower_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "shopping_bags", force: :cascade do |t|
