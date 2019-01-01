@@ -17,12 +17,25 @@
         <%end%>
         <div class="index">
             <div class="theTarget">
-                <div style="background-image: url(images/test1.jpg)"></div>
-                <div style="background-image: url(images/test2.jpg)"></div>
-                <div style="background-image: url(images/test3.jpg)"></div>
-                <div style="background-image: url(images/test4.jpg)"></div>
-                <div style="background-image: url(images/test5.jpg)"></div>
+                    <%= link_to product_category_goods_path do %>
+                        <%= image_tag '/images/company-01.png' %>
+                    <%end%>
+                    <%= link_to product_category_stationery_path do %>
+                        <%= image_tag '/images/company-02.png' %>
+                    <%end%>
+                    <%= link_to product_category_fashion_path do %>
+                        <%= image_tag '/images/company-03.png' %>
+                    <%end%>
             </div>
+            <div class="category">
+                <div class="goods">
+                    <h3>カテゴリから探す</h3>
+                    <button type="button" class="goods_btn"><%= link_to "雑貨", product_category_goods_path %></button>
+                    <button type="button" class="stationery_btn"><%= link_to "ステーショナリー", product_category_stationery_path %></button>
+                    <button type="button" class="fashion_btn"><%= link_to "ファッション", product_category_fashion_path %></button>
+                </div>
+            </div>
+
             <div class="tabs">
                 <ul class="tabnav">
                     <li><a href="#tab01">商品一覧</a></li>
@@ -33,17 +46,12 @@
                         <div class="main clearfix">
                             <div class="main-content">
                                 <h3>商品一覧</h3>
-                                <% if@products.present? %>
+                                <% if @products.present? %>
                                     <% @products.each_with_index do |product| %>
                                     <div class="product-box">
-                                        <% if @product_image.present? %>
-                                            <!-- 画像があるときは１枚目をここにひょうじ -->
-                                            <%= attachment_image_tag product, :product_images_images, :fill, 255, 255, format: 'jpeg' %>
-                                        <% else %>
                                         <%= link_to product_path(product.id) do %>
-                                            <img src="images/no_image.jpg", width="255", height="255">
+                                            <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
                                         <%end%>
-                                        <% end %>
                                         <p><%= product.category_id %></p>
                                         <p>商品名：<%= product.name %></p>
                                         <p>
@@ -101,3 +109,91 @@
         </script>
     </body>
 </html>
+<style>
+
+/*タブメニューここから*/
+.tabnav{
+    margin: 0;
+    padding: 0;
+}
+.tabnav li{
+    display: inline;
+}
+.tabnav li a{
+    display: inline-block;
+    background: #405dca;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    text-decoration: none;
+    width: calc(99.3% / 2);
+    margin-top: 50px;
+    text-align: center;
+}
+.tabnav li a:hover,
+.tabnav li a.active{
+    background: #ddd;
+    color: #333;
+}
+.tabcontent{
+    padding: 20px;
+    border: 1px dotted #ccc;
+}
+#tab02{
+  text-align: center;
+}
+.tweet-box{
+  padding:20px;
+}
+
+/*カテゴリーボタン*/
+.goods_btn{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #ff7f7f;
+    color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 0px 5px #ff7f7f;
+    border: dashed 1px #FFF;
+    width: calc(94.0% / 3);
+    margin: 0 10px;
+}
+
+.goods_btn:hover{
+    border: dotted 1px #FFF;
+}
+
+.stationery_btn{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #a180dc;
+    color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 0px 5px #a180dc;
+    border: dashed 1px #FFF;
+    width: calc(94.0% / 3);
+    margin: 0 10px;
+}
+
+.stationery_btn:hover{
+    border: dotted 1px #FFF;
+}
+.fashion_btn{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #FFA000;
+    color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 0px 5px #FFA000;
+    border: dashed 1px #FFF;
+    width: calc(94.0% / 3);
+    margin: 0 10px;
+}
+
+.fashion_btn:hover{
+    border: dotted 1px #FFF;
+}
+</style>

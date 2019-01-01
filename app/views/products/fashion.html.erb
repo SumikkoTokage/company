@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+    	<link rel="stylesheet" href="skippr.scss">
+        <link rel="stylesheet" href="style.scss">
+        <title></title>
+    </head>
+    <body>
+        <div class="header">
+        <%= render partial: 'products/header' %>
+        </div>
+        <div class="index">
+            <div class="category">
+                <div class="goods">
+                    <h3>カテゴリから探す</h3>
+                    <button type="button" class="goods_btn"><%= link_to "雑貨", product_category_goods_path %></button>
+                    <button type="button" class="stationery_btn"><%= link_to "ステーショナリー", product_category_stationery_path %></button>
+                    <button type="button" class="fashion_btn"><%= link_to "ファッション", product_category_fashion_path %></button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <ul class="tabnav">
+                    <li><a href="#tab01">Ｔシャツ</a></li>
+                    <li><a href="#tab02">イヤリング</a></li>
+                    <li><a href="#tab03">ピアス</a></li>
+                    <li><a href="#tab04">ネックレス</a></li>
+                </ul>
+                <div class="tabcontent">
+                    <div id="tab01">
+                        <div class="main clearfix">
+                            <div class="main-content">
+                                <h3>Ｔシャツ一覧</h3>
+                                <% if @product_shirts.present? %>
+                                    <% @product_shirts.each_with_index do |product| %>
+                                    <div class="product-box">
+                                        <%= link_to product_path(product.id) do %>
+                                            <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
+                                        <%end%>
+                                        <p><%= product.category_id %></p>
+                                        <p>商品名：<%= product.name %></p>
+                                        <p>
+                                            クリエイター名：<%= link_to creator_path(product.creator_id) do %>
+                                                <%= product.creator.name %>
+                                            <%end%>
+                                        </p>
+                                        <p>¥<%= product.price %></p>
+                                    </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab02">
+                        <div class="main clearfix">
+                            <div class="main-content">
+                                <h3>イヤリング一覧</h3>
+                                <% if @product_earringss.present? %>
+                                    <% @product_earringss.each_with_index do |product| %>
+                                    <div class="product-box">
+                                        <%= link_to product_path(product.id) do %>
+                                            <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
+                                        <%end%>
+                                        <p><%= product.category_id %></p>
+                                        <p>商品名：<%= product.name %></p>
+                                        <p>
+                                            クリエイター名：<%= link_to creator_path(product.creator_id) do %>
+                                                <%= product.creator.name %>
+                                            <%end%>
+                                        </p>
+                                        <p>¥<%= product.price %></p>
+                                    </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab03">
+                        <div class="main clearfix">
+                            <div class="main-content">
+                                <h3>ピアス一覧</h3>
+                                <% if @product_piercingss.present? %>
+                                    <% @product_piercingss.each_with_index do |product| %>
+                                    <div class="product-box">
+                                        <%= link_to product_path(product.id) do %>
+                                            <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
+                                        <%end%>
+                                        <p><%= product.category_id %></p>
+                                        <p>商品名：<%= product.name %></p>
+                                        <p>
+                                            クリエイター名：<%= link_to creator_path(product.creator_id) do %>
+                                                <%= product.creator.name %>
+                                            <%end%>
+                                        </p>
+                                        <p>¥<%= product.price %></p>
+                                    </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab04">
+                        <div class="main clearfix">
+                            <div class="main-content">
+                                <h3>ネックレス一覧</h3>
+                                <% if @product_necklaces.present? %>
+                                    <% @product_necklaces.each_with_index do |product| %>
+                                    <div class="product-box">
+                                        <%= link_to product_path(product.id) do %>
+                                            <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
+                                        <%end%>
+                                        <p><%= product.category_id %></p>
+                                        <p>商品名：<%= product.name %></p>
+                                        <p>
+                                            クリエイター名：<%= link_to creator_path(product.creator_id) do %>
+                                                <%= product.creator.name %>
+                                            <%end%>
+                                        </p>
+                                        <p>¥<%= product.price %></p>
+                                    </div>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%= render partial: 'products/footer' %>
+        <script src="javascript/js/jquery-3.3.1.min.js"></script>
+        <script src="javascript/js/skippr.min.js"></script>
+        <script src="javascript/js/script.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('.tabcontent > div').hide();
+
+                $('.tabnav a').click(function () {
+                    $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+
+                    $('.tabnav a').removeClass('active');
+                    $(this).addClass('active');
+
+                    return false;
+                }).filter(':eq(0)').click();
+            });
+        </script>
+    </body>
+</html>
+<style>
+/*タブメニューここから*/
+.tabnav{
+    margin: 0;
+    padding: 0;
+}
+.tabnav li{
+    display: inline;
+}
+.tabnav li a{
+    display: inline-block;
+    background: #FFA000;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    text-decoration: none;
+    width: calc(98.0% / 4);
+    margin-top: 50px;
+    text-align: center;
+}
+.tabnav li a:hover,
+.tabnav li a.active{
+    background: #ddd;
+    color: #333;
+}
+.tabcontent{
+    padding: 20px;
+    border: 1px dotted #ccc;
+}
+/*カテゴリーボタン*/
+.goods_btn{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #ff7f7f;
+    color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 0px 5px #ff7f7f;
+    border: dashed 1px #FFF;
+    width: calc(94.0% / 3);
+    margin: 0 10px;
+}
+
+.goods_btn:hover{
+    border: dotted 1px #FFF;
+}
+
+.stationery_btn{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #a180dc;
+    color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 0px 5px #a180dc;
+    border: dashed 1px #FFF;
+    width: calc(94.0% / 3);
+    margin: 0 10px;
+}
+
+.stationery_btn:hover{
+    border: dotted 1px #FFF;
+}
+.fashion_btn{
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #FFA000;
+    color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 0px 5px #FFA000;
+    border: dashed 1px #FFF;
+    width: calc(94.0% / 3);
+    margin: 0 10px;
+}
+
+.fashion_btn:hover{
+    border: dotted 1px #FFF;
+}
+
+
+</style>

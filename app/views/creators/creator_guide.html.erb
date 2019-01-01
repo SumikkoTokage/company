@@ -26,7 +26,12 @@
                             <P>ユーザが購入したら発送をお願いします。</P>
                             <p>＜投稿について＞</p>
                             <p>写真を載せて自分の作品情報などを気軽に発信できます！</p>
+                            <%if !user_signed_in? %>
+                            <p>クリエイター登録にはユーザ登録が必要です</p>
+                            <p><button type="button" class="btn btn-warning btn-lg"><%= link_to "新規登録", new_user_registration_path %></button></p>
+                            <%end%>
                         </div>
+                        <% if user_signed_in? %>
                         <div class="creator-guide">
                             <div class="box30">
                                 <div class="box-title">新規登録・ログイン</div>
@@ -49,6 +54,7 @@
                                 <p><%= link_to "投稿", new_post_path %></p>
                             </div>
                         </div>
+                        <%end%>
                     </div>
                 </div>
             </div>
@@ -136,5 +142,29 @@
 .box30 p {
     padding: 15px 20px;
     margin: 0;
+}
+h1 {
+position: relative;
+padding-left: 25px;
+}
+
+h1:before {
+position: absolute;
+content: '';
+bottom: -3px;
+left: 0;
+width: 0;
+height: 0;
+border: none;
+border-left: solid 15px transparent;
+border-bottom: solid 15px rgb(119, 195, 223);
+}
+h1:after {
+position: absolute;
+content: '';
+bottom: -3px;
+left: 10px;
+width: 100%;
+border-bottom: solid 3px rgb(119, 195, 223);
 }
 </style>

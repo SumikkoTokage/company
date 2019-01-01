@@ -24,6 +24,7 @@ class User < ApplicationRecord
   has_one :shopping_cart
   has_many :shopping_bags
   has_one :creator
+  mount_uploader :avatar, AvatarUploader
 
   # # ====================自分がフォローしているクリエイターとの関連 ===================================
   # #フォローする側のUserから見て、フォローされる側のCreatorを(中間テーブルを介して)集める。なので親はfollowing_id(フォローする側)
@@ -35,9 +36,3 @@ class User < ApplicationRecord
 
 end
 
-class User::ParameterSanitizer < Devise::ParameterSanitizer
-  def initialize(*)
-    super
-    permit(:sign_up, keys: [:id, :nickname, :email, :gender, :image, :password, address_lines_attributes: [:id, :name, :postcode, :prefecture_id, :city, :address]])
-  end
-end

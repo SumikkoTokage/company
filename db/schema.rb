@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_22_153041) do
+ActiveRecord::Schema.define(version: 2018_12_27_120552) do
 
   create_table "address_lines", force: :cascade do |t|
     t.integer "user_id"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_153041) do
     t.string "shop_name"
     t.integer "shop_status_id"
     t.integer "send_date_id"
-    t.string "image_id"
+    t.string "avatar"
     t.boolean "delete_flag", default: false, null: false
     t.string "telephone"
     t.text "description"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_153041) do
 
   create_table "product_images", force: :cascade do |t|
     t.integer "product_id"
-    t.string "image_id"
+    t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_153041) do
     t.string "nickname"
     t.integer "gender"
     t.boolean "delete_flag", default: false, null: false
-    t.string "image_id"
+    t.string "avatar"
     t.integer "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

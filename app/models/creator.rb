@@ -27,29 +27,17 @@ class Creator < ApplicationRecord
   false
   end
 
-
   has_many :bank_accounts, dependent: :destroy, inverse_of: :creator
   has_many :products, dependent: :destroy
   has_many :posts, dependent: :destroy
   accepts_nested_attributes_for :bank_accounts, allow_destroy: true, reject_if: :all_blank
-  attachment :image
   belongs_to :user
+  mount_uploader :avatar, AvatarUploader
 
-
-
-  # has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id
-  # # ====================自分がフォローされるユーザーとの関連 ===================================
-  # #フォローされる側のCreatorから見て、フォローしてくる側のUserを(中間テーブルを介して)集める。なので親はfollower_id(フォローされる側)
-  # # 中間テーブルを介して「following」モデルのUser(フォローする側)を集めることを「followers」と定義
-  # has_many :followers, through: :passive_relationships, source: :following
-  # # =======================================================================================
-
-  # def followed_by?(current_user)
-  #   # 今自分(引数のuser)がフォローしようとしているユーザー(レシーバー)がフォローされているユーザー(つまりpassive)の中から、引数に渡されたユーザー(自分)がいるかどうかを調べる
-  #   active_relationships.find_by(follower_id: current_user.id).present?
-  # end
-
-
+  enum deposit_type_id: {
+      普通預金: 0,
+      当座預金: 1
+    }
 
   enum shop_status_id: {
       公開: 0,
@@ -71,13 +59,5 @@ class Creator < ApplicationRecord
     ユーザー: false,
     退会ユーザー: true
   }
-
-
 end
 
-class Creator::ParameterSanitizer < Devise::ParameterSanitizer
-  def initialize(*)
-    super
-    permit(:sign_up, keys: [:name, :user_id, :telephone, :shop_name, :image, :description, :send_date_id, :password, :bank_accounts_attributes => [ :id, :bank_code, :bank_name, :branch_code_id, :deposit_type_id, :number, :name]])
-  end
-end

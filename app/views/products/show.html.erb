@@ -14,20 +14,25 @@
     		<div class="main-content">
         		<div class="row">
 	            	<div class="col-md-1"></div>
-	            	<div class="col-md-4">
-						<h1><%= @product.name %></h1>
-
-						<p>ここに画像いれたい</p>
-						<% if @product.product_images.present? %>
-						  <% @product.product_images.each do |image| %>
-						    <p></p>
-						  <% end %>
-						  <% else %>
-						    <img src="assets/no_image.jpg", width="255", height="255">
-						<% end %>
+					<h1><%= @product.name %></h1>
+					<% if @product.product_images.present? %>
+					<div class="col-md-4">
+						<div class="main-visual">
+							<div class="theTarget">
+							  	<% @product.product_images.each do |image| %>
+							  		<div class="slide">
+							    		<%= image_tag image.avatar.to_s, :size => "350x350" %>
+							    	</div>
+							  	<% else %>
+							  		<div class="slide">
+							    		<img src="assets/no_image.jpg", width="350", height="350">
+							    	</div>
+								<% end %>
+							</div>
+						</div>
 					</div>
 
-					<div class="col-md-6">
+					<div class="col-md-7">
 			            <table class="table table-striped">
 			                <thead>
 			                  	<tr>
@@ -61,10 +66,8 @@
 			                    </tr>
 			                    <tr>
 			                    	<td>配送方法</td>
-			                    	
-			                    		<td><%= @product.postage_list_id %></td>
-			                    		<td><%= @product.postage_price %>円</td>
-			                    
+		                    		<td><%= @product.postage_list_id %></td>
+		                    		<td><%= @product.postage_price %>円</td>
 			                    </tr>
 			                    <tr>
 			                    	<td>発送までの日数</td>
@@ -73,21 +76,6 @@
 			                    </tr>
 			                </tbody>
 			            </table>
-			            <%= form_for(CartItem.new) do |f| %>
-                				<%= f.hidden_field :product_id, value: @product.id %>
-                				<button type="button" class="btn btn-danger btn-lg"><%= f.submit "カートに入れる" %></button>
-          				<% end %>
-			            <% if user_signed_in? %>
-		              		<button type="button" class="btn btn-warning btn-lg">
-			               		<% if !ProductFavorite.exists?(user_id:current_user.id,product_id:@product.id) %>
-			                		<%= link_to "お気に入り",product_add_path(@product),method: :post %>
-					    		<% else %>
-					    			<%= link_to "お気に入り解除",product_add_path(@product),method: :delete %>
-		                		<%end%>
-		                	</button>
-		            	<% else %>
-		            		<button type="button" class="btn btn-warning btn-lg">お気に入り</button>
-		            	<% end %>
 		            	<table class="table table-bordered">
 	                  		<thead>
 	                 			<tr>
@@ -109,13 +97,34 @@
 	                    		</tr>
 	                  		</tbody>
 	              		</table>
-	            		<div class="col-md-1"></div>
-	        		</div>
-	        		<% if creator_signed_in? %>
-	        			<%if @product.creator_id == current_creator.id %>
+              			<%= form_for(CartItem.new) do |f| %>
+          					<%= f.hidden_field :product_id, value: @product.id %>
+        					<%= button_tag :type => "submit", :class =>"cart" do %>
+        						<i class="fa fa-cart-plus"></i>
+        					<%end%>
+  						<% end %>
+	            		<% if user_signed_in? %>
+	               			<% if !ProductFavorite.exists?(user_id:current_user.id,product_id:@product.id) %>
+	                			<%= link_to product_add_path(@product),method: :post, class: 'favorite' do  %>
+	                				<i class="far fa-heart"></i>
+	                			<%end%>
+			    			<% else %>
+			    				<%= link_to product_add_path(@product),method: :delete, class: 'favorite' do %>
+			    					<i class="fas fa-heart"></i>
+			    				<%end%>
+                			<%end%>
+            			<% else %>
+            				<button type="button" class="favorite">お気に入り</button>
+            			<% end %>
+        				<div class="col-md-1"></div>
+    				</div>
+
+        			<% if creator_signed_in? %>
+        				<%if @product.creator_id == current_creator.id %>
 							<%= link_to "編集", edit_product_path(@product.id)%>
 							<%= link_to "削除", product_path(@product) , method: :delete, data: { confirm: "削除してよろしいですか？" } %>
 						<%end%>
+					<%end%>
 					<%end%>
 				</div>
 			</div>
@@ -126,4 +135,107 @@
         <script src="javascript/js/script.js"></script>
     </body>
 </html>
+<style>
+.col-md-4{
+	text-align: center;
+}
+.col-md-7{
+	padding:5px 40px;
+}
+.cart{/*周りの凹み*/
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: blue;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: center;
+    background: #f7f7f7;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.08);
+    float:left;
+}
+.cart .fa {/*ボタン自体*/
+    position: absolute;
+    content: '';
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    vertical-align: middle; 
+    left: 10px;
+    top: 9px;
+    border-radius: 50%;
+    font-size: 40px;
+    background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+    background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: solid 2px #b5b5b5;
+  }
+  
+.cart .fa:active{
+    background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: solid 2px #d8d8d8;
+}
+
+.favorite{/*周りの凹み*/
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: red;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: center;
+    background: #f7f7f7;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.08);
+}
+.favorite .far {/*ボタン自体*/
+    position: absolute;
+    content: '';
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    vertical-align: middle; 
+    left: 10px;
+    top: 9px;
+    border-radius: 50%;
+    font-size: 40px;
+    background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+    background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: solid 2px #b5b5b5;
+  }
+  
+.favorite .far:active{
+    background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: solid 2px #d8d8d8;
+}
+.favorite .fas {/*ボタン自体*/
+    position: absolute;
+    content: '';
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    vertical-align: middle; 
+    left: 10px;
+    top: 9px;
+    border-radius: 50%;
+    font-size: 40px;
+    background-image: -webkit-linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+    background-image: linear-gradient(#e8e8e8 0%, #d6d6d6 100%);
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: solid 2px #b5b5b5;
+  }
+  
+.favorite .fas:active{
+    background-image: -webkit-linear-gradient(#efefef 0%, #d6d6d6 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+    border-bottom: solid 2px #d8d8d8;
+}
+</style>
 

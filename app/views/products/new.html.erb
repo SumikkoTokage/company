@@ -13,11 +13,9 @@
 			  <p>商品名：<%= f.text_field :name %></p>
 			  <p>商品説明文：<%= f.text_area :body %></p>
 			  <p>画像は１商品につき５枚まで投稿できます。</p>
-			  <p>商品画像１枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
-			  <p>商品画像２枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
-			  <p>商品画像３枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
-			  <p>商品画像４枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
-			  <p>商品画像５枚目：<%= f.attachment_field :product_images_images, multiple: true %></p>
+			  <%= f.fields_for :product_images do |pi| %>
+			  	<p>商品画像：<%= pi.file_field :avatar %></p>
+			  <%end%>
 			  <p>価格：¥<%= f.number_field :price %></p>
 			  <p>在庫数：<%= f.number_field :stock_number %>個</p>
 	    	  <p>販売ステータス：

@@ -23,7 +23,8 @@
 
   <div class="field">
     <%= f.label :アイコン %><br />
-    <%= f.attachment_field :image %>
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %>
   </div>
 
   <%= f.fields_for :address_lines, AddressLine.new do |al| %>

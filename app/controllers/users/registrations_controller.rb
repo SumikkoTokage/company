@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
 
   # GET /resource/sign_up
@@ -15,6 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    binding.pry
     super
     if user_signed_in?
       shopping_cart = ShoppingCart.new
@@ -24,9 +25,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+   def edit
+     @user.avatar.cache! unless @user.avatar.blank?
+     super
+   end
 
   # PUT /resource
   # def update
@@ -47,8 +49,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up,keys: [:nickname, :gender, :avatar, address_lines_attributes: [:id, :name, :postcode, :prefecture_id, :city, :address]])
+  end
+
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update,keys: [:nickname, :gender, :avatar, address_lines_attributes: [:id, :name, :postcode, :prefecture_id, :city, :address]])
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])

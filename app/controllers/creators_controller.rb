@@ -9,7 +9,7 @@ class CreatorsController < ApplicationController
   def show
     #binding.pry
     @creator = Creator.find_by(id: params[:id])
-    @products = @creator.products
+    @products = @creator.products.where(sale_status_id: 0)
     @posts = @creator.posts
     @user = current_user
   end
@@ -17,10 +17,13 @@ class CreatorsController < ApplicationController
   def mypage
     @creator = Creator.find(current_creator.id)
     @bank_accounts = current_creator.bank_accounts
+    @products = @creator.products
+
   end
 
   def edit
     @creator = Creator.find(current_creator.id)
+    @creator.avatar.cache! unless @creator.avatar.blank?
   end
 
   def update
@@ -39,12 +42,8 @@ class CreatorsController < ApplicationController
   end
 
   private
-  def creator_params
-      params.require(:creator).permit(:name, :user_id, :telephone, :shop_name, :image, :description, :send_date_id,
-        bank_accounts_attributes:[ :bank_code, :bank_name, :branch_code_id, :deposit_type_id, :number, :name ])
-  end
 
   def update_creator_params
-      params.require(:creator).permit(:name, :user_id, :telephone, :shop_name, :image, :description, :send_date_id, bank_accounts_attributes:[:_destroy, :id, :bank_code, :bank_name, :branch_code_id, :deposit_type_id, :number, :name ])
+      params.require(:creator).permit(:name, :user_id, :telephone, :shop_name, :avatar, :description, :send_date_id, bank_accounts_attributes:[:_destroy, :id, :bank_code, :bank_name, :branch_code_id, :deposit_type_id, :number, :name ])
   end
 end

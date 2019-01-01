@@ -42,10 +42,14 @@ Rails.application.routes.draw do
   post  '/complete' => "shopping_carts#complete"
   resources :address_lines, :only => [:new, :create, :edit, :update, :destroy, :index]
   get 'products/complete' =>'products#complete'
+
   resources :products do
     resources :product_images
     post 'add' => 'product_favorites#create'
     delete '/add' => 'product_favorites#destroy'
   end
+  get 'product/category/goods' => 'products#goods'
+  get 'product/category/stationery' => 'products#stationery'
+  get 'product/category/fashion' => 'products#fashion'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

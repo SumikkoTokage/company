@@ -16,8 +16,10 @@
 		        <% if@creators.present? %>
 		            <% @creators.each_with_index do |creator| %>
 		            <div class="product-box">
-		                <% if @creator_image.present? %>
-		                    <%= attachment_image_tag creator, :image, :fill, 255, 255, format: 'jpeg' %>
+		                <% if creator.avatar.present? %>
+		                	<%= link_to creator_path(creator.id) do %>
+		                    	<%= image_tag current_creator.avatar.to_s, :size => "255x255" %>
+		                    <%end%>
 		                <% else %>
 		                <%= link_to creator_path(creator.id) do %>
 		                    <img src="images/no_image.jpg", width="255", height="255">

@@ -17,7 +17,8 @@
   </div>
   <div class="field">
     <%= f.label :SHOPアイコン %><br />
-    <%= f.attachment_field :image %>
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %>
   </div>
   <div class="field">
     <%= f.label :SHOPの説明文 %><br />
@@ -28,7 +29,7 @@
     <%= f.select :send_date_id, Creator.send_date_ids.keys, {prompt: '選択してください'} %>日以内に発送する
   </div>
 
-  <%= f.fields_for :bank_accounts, BankAccount.new do |ba| %>
+  <%= fields_for (BankAccount.new) do |ba| %>
     <div class="field">
         <%= ba.label :金融機関コード %><br />
         <%= ba.number_field :bank_code, autofocus: true, autocomplete: "bank_code", placeholder: "例：　1234" %>

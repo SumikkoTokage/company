@@ -45,7 +45,7 @@
 				<div class="ribbon_box">
 					<p>ユーザー専用機能は随時追加予定！</p>
 					<p>登録はこちら</p>
-					<p><button type="button" class="btn btn-warning btn-lg"><%= link_to "新規登録", new_user_session_path %></button></p>
+					<p><button type="button" class="btn btn-warning btn-lg"><%= link_to "新規登録", new_user_registration_path %></button></p>
 				</div>
 			</div>
 		</div>
@@ -112,4 +112,30 @@ border-left: solid 5px #7db4e6;/*左線*/
     background: #b25552;
     border-radius: 5px 0 0 5px;
 }
+
+h1 {
+position: relative;
+padding-left: 25px;
+}
+
+h1:before {
+position: absolute;
+content: '';
+bottom: -3px;
+left: 0;
+width: 0;
+height: 0;
+border: none;
+border-left: solid 15px transparent;
+border-bottom: solid 15px rgb(119, 195, 223);
+}
+h1:after {
+position: absolute;
+content: '';
+bottom: -3px;
+left: 10px;
+width: 100%;
+border-bottom: solid 3px rgb(119, 195, 223);
+}
+
 </style>

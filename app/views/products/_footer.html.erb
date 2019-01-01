@@ -1,6 +1,6 @@
 <div class="footer">
 		<div class="footer-nav">
-			<p>ユーザ</p>
+			<p>＜ユーザ＞</p>
 			<ul class="footer-nav-list">
 				<% if user_signed_in? %>
 					<li class="footer-nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
@@ -13,7 +13,7 @@
                   	<li class="footer-nav-item"><%= link_to 'マイページ', user_path(current_user.id) %></a></li>
                 <% end %>
 			</ul>
-			<p>クリエイター</p>
+			<p>＜クリエイター＞</p>
 			<ul class="footer-nav-list">
 				<% if creator_signed_in? %>
 					<li class="footer-nav-item"><%= link_to "ログアウト", destroy_creator_session_path, method: :delete %></li>
@@ -24,6 +24,13 @@
 				<li class="footer-nav-item"><a href="/creator_guide">クリエイターの方はこちら</a></li>
 				<li class="footer-nav-item"><a href="/creators">クリエイター一覧</a></li>
 			</ul>
+			<p>＜カテゴリー＞</p>
+			<ul class="footer-nav-list">
+				<li class="footer-nav-item"><a href="/product/category/goods">雑貨</a></li>
+				<li class="footer-nav-item"><a href="/product/category/stationery">ステーショナリー</a></li>
+				<li class="footer-nav-item"><a href="/product/category/fashion">ファッション</a></li>
+			</ul>
+
 		</div>
 		<p class="footer-text">Company</p>
 </div>	

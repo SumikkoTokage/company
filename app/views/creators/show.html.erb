@@ -10,7 +10,7 @@
         <div class="header">
         <%= render partial: 'products/header' %>
         </div>
-         <div class="tabs">
+        <div class="tabs">
             <ul class="tabnav">
                 <li><a href="#tab01">商品一覧</a></li>
                 <li><a href="#tab02">クリエイター情報</a></li>
@@ -20,38 +20,29 @@
             		<div class="main clearfix">
             		    <div class="main-content">
             		        <h3><%= @creator.name %>の商品一覧</h3>
-                            <div class="main-content">
-                                <% if@products.present? %>
-                                    <% @products.each_with_index do |product| %>
-                                    <div class="product-box">
-                                        <% if @product_image.present? %>
-                                            <!-- 画像があるときは１枚目をここにひょうじ -->
-                                            <%= attachment_image_tag product_image, :product_images_images, :fill, 255, 255, format: 'jpeg' %>
-                                        <% else %>
-                                            <%= link_to product_path(product.id) do %>
-                                                <img src="images/no_image.jpg", width="255", height="255">
-                                            <%end%>
-                                        <% end %>
-                                        <p><%= product.category_id %></p>
-                                        <p>商品名：<%= product.name %></p>
-                                        <p>クリエイター名：<%= product.creator.name %></p>
-                                        <p>¥<%= product.price %></p>
-                                    </div>
+                            <% if@products.present? %>
+                                <% @products.each_with_index do |product| %>
+                                <div class="product-box">
+                                    <% if product.product_images.present? %>
+                                        <%= link_to product_path(product.id) do %>
+                                            <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
+                                        <%end%>
+                                    <% else %>
+                                        <%= link_to product_path(product.id) do %>
+                                            <img src="images/no_image.jpg", width="255", height="255">
+                                        <%end%>
                                     <% end %>
+                                    <p><%= product.category_id %></p>
+                                    <p>商品名：<%= product.name %></p>
+                                    <p>クリエイター名：<%= product.creator.name %></p>
+                                    <p>¥<%= product.price %></p>
+                                </div>
                                 <% end %>
-                            </div>
+                            <% end %>
             		    </div>
             		</div>
                 </div>
                 <div id="tab02">
-                    <!-- <p><%#=link_to "フォロワー", followers_user_path(@user) %></p>
-                    <%# if user_signed_in? %>
-                          <%# if @creator.followed_by?(current_user) %>
-                            <p><%#=link_to "フォロー済み", creator_relationships_path(@creator.id), method: :delete %></p>
-                        <%# else %>
-                            <p><%#=link_to "フォローする", creator_relationships_path(@creator.id), method: :post %></p>
-                        <%# end %>
-                    <%# end %> -->
                     <% @posts.each do |post| %>
                         <div class="tweet-box">
                             <%= attachment_image_tag post, :image, :fill, 255, 255, format: 'jpeg' %></br>
@@ -82,6 +73,42 @@
         </script>
     </body>
 </html>
+<style>
+*タブメニューここから*/
+.tabnav{
+    margin: 0;
+    padding: 0;
+}
+.tabnav li{
+    display: inline;
+}
+.tabnav li a{
+    display: inline-block;
+    background: #405dca;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    text-decoration: none;
+    width: calc(99.3% / 2);
+    margin-top: 50px;
+    text-align: center;
+}
+.tabnav li a:hover,
+.tabnav li a.active{
+    background: #ddd;
+    color: #333;
+}
+.tabcontent{
+    padding: 20px;
+    border: 1px dotted #ccc;
+}
+#tab02{
+  text-align: center;
+}
+.tweet-box{
+  padding:20px;
+}
+</style>
 
 
 
