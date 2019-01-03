@@ -1,6 +1,6 @@
 class CreateBagItems < ActiveRecord::Migration[5.2]
   def change
-    create_table :bag_items do |t|
+    create_table :bag_items, :options => 'ENGINE=InnoDB ROW_FORMAT=DYNAMIC' do |t|
     	t.integer	:product_id
 		t.integer	:shopping_bag_id
 		t.integer	:quantity

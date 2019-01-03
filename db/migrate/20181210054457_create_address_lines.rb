@@ -1,6 +1,6 @@
 class CreateAddressLines < ActiveRecord::Migration[5.2]
   def change
-    create_table :address_lines do |t|
+    create_table :address_lines, :options => 'ENGINE=InnoDB ROW_FORMAT=DYNAMIC' do |t|
     	t.integer :user_id
 		t.string :name
 		t.string :postcode
