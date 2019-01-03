@@ -2,7 +2,7 @@
 
 class DeviseCreateCreators < ActiveRecord::Migration[5.2]
   def change
-    create_table :creators, :options => 'ENGINE=InnoDB ROW_FORMAT=DYNAMIC' do |t|
+    create_table :creators do |t|
       ## Database authenticatable
       t.string :email, :unique => false
       t.string :name,               null: false, default: ""
