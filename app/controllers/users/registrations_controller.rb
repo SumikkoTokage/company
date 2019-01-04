@@ -15,7 +15,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    binding.pry
     super
     if user_signed_in?
       shopping_cart = ShoppingCart.new
