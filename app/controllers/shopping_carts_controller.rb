@@ -18,7 +18,7 @@ class ShoppingCartsController < ApplicationController
   	def complete
   		shopping_bag = ShoppingBag.new
   		shopping_bag.user_id = current_user.id
-  		shopping_bag.address_line_id = params[:shopping_bag][:address_line_id]
+  		shopping_bag.address_lines_id = params[:shopping_bag][:address_line_id]
   		shopping_bag.save
   		shopping_cart = current_user.shopping_cart
   		cart_items = current_user.shopping_cart.cart_items

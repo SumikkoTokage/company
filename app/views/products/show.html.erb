@@ -2,8 +2,6 @@
 <html>
     <head>
     	<meta charset="UTF-8">
-    	<link rel="stylesheet" href="skippr.scss">
-        <link rel="stylesheet" href="style.scss">
         <title></title>
     </head>
     <body>
@@ -15,19 +13,21 @@
         		<div class="row">
 	            	<div class="col-md-1"></div>
 					<h1><%= @product.name %></h1>
-					<% if @product.product_images.present? %>
+
 					<div class="col-md-4">
 						<div class="main-visual">
 							<div class="theTarget">
-							  	<% @product.product_images.each do |image| %>
-							  		<div class="slide">
-							    		<%= image_tag image.avatar.to_s, :size => "350x350" %>
-							    	</div>
-							  	<% else %>
-							  		<div class="slide">
-							    		<img src="assets/no_image.jpg", width="350", height="350">
-							    	</div>
-								<% end %>
+                                <% if @product.product_images.present? %>
+        						  	<% @product.product_images.each do |image| %>
+        						  		<div class="slide">
+        						    		<%= image_tag image.avatar.to_s, :size => "350x350" %>
+        						    	</div>
+                                    <%end%>
+            				  	<% else %>
+            				  		<div class="slide">
+            				    		<img src="/images/no_image.jpg", width="350", height="350">
+            				    	</div>
+            					<% end %>
 							</div>
 						</div>
 					</div>
@@ -125,15 +125,10 @@
 							<%= link_to "削除", product_path(@product) , method: :delete, data: { confirm: "削除してよろしいですか？" } %>
 						<%end%>
 					<%end%>
-					<%end%>
 				</div>
 			</div>
 		</div>
 		<%= render partial: 'products/footer' %>
-        <script src="javascript/js/jquery-3.3.1.min.js"></script>
-        <script src="javascript/js/skippr.min.js"></script>
-        <script src="javascript/js/script.js"></script>
-    </body>
 </html>
 <style>
 .col-md-4{

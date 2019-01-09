@@ -7,7 +7,8 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find_by(id: params[:id])
+    #binding.pry
+    @product = Product.find(params[:id])
     @product_images = ProductImage.where(product_id: params[:product_id])
   end
 
@@ -25,7 +26,7 @@ class ProductsController < ApplicationController
 
   def edit
     #binding.pry
-    @product = Product.find_by(id: params[:id])
+    @product = Product.find(params[:id])
     count = @product.product_images.count
     (5 - count).times{ @product.product_images.build }
 
@@ -42,7 +43,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    product = Product.find_by(params[:id])
+    product = Product.find(params[:id])
     product.destroy
     redirect_to products_path
   end

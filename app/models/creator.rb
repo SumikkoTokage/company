@@ -4,7 +4,7 @@ class Creator < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :authentication_keys => [:name]
-  validates_uniqueness_of :name
+  validates :name,uniqueness: true
   validates_presence_of :name
 
   def self.find_first_by_auth_conditions(warden_conditions)

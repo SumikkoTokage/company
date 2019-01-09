@@ -9,7 +9,7 @@ class ProductImagesController < ApplicationController
 		@product_image.save
 	end
 	def product_image_params
-      params.require(:product_image).permit(:product_id, {:avatar[]})
+      params.require(:product_image).permit(:product_id, :avatar[])
     end
 
 end
