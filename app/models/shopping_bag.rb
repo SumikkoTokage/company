@@ -1,7 +1,7 @@
 class ShoppingBag < ApplicationRecord
 	has_many :cart_items, dependent: :destroy
-	belongs_to :user
-	belongs_to :address_line
+	belongs_to :user, optional: true
+	belongs_to :address_line, optional: true
 	has_many :bag_items
 
 	def sum_total_price

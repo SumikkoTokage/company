@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:show]
+  before_action :authenticate_user!, only: [:show, :update]
   def show
   	@user = User.find(current_user.id)
   	@product_favorites = current_user.product_favorites
@@ -21,5 +21,20 @@ class UsersController < ApplicationController
   def user_guide
   end
 
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params)
+    redirect_to @user
+  end
+
+  protected
+
+  def user_params
+    params.require(:user).permit(:account_update,keys: [:nickname, :gender, :avatar, address_lines_attributes: [:id, :name, :postcode, :prefecture_id, :city, :address]])
+  end
+
+
 end
+
+
 

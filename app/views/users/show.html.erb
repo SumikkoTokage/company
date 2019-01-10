@@ -13,15 +13,16 @@
 					<div class="col-xs-3">
 						<%= link_to "topページへ戻る", root_path %>
 						<%= image_tag current_user.avatar.to_s, :size => "255x255" %>
-						<% if @user.id == current_user.id %>
-		        		<p><%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-success" %></p>
-		        		<% end %>
+						<%# if @user.id == current_user.id %>
+		        		<!--<p><%#= link_to "プロフィール編集", edit_user_registration_path(current_user), class: "btn btn-success" %></p> -->
+		        		<%# end %>
 					</div>
 					<div class="col-xs-9">
 					<ul class="list-group">
 						<li class="list-group-item list-group-item-info" style="text-align: center"><strong>ユーザープロフィール</strong></li>
 						<li class="list-group-item"><strong>ユーザーネーム</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= @user.nickname %></li>
 						<li class="list-group-item"><strong>メールアドレス</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @user.email %></li>
+						<li class="list-group-item"><strong>性別</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= @user.gender %></li>
 						<% @user.address_lines.each do |address_line| %>
 						<li class="list-group-item"><strong>郵便番号</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;〒<%= address_line.postcode %></li>
 						<li class="list-group-item"><strong>都・道・府・県</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= address_line.prefecture_id %></li>
@@ -53,14 +54,13 @@
 										<%= shopping_bag.address_line.address %>
 									</td>
 									<td>
-										<%= shopping_bag.user.first_name %><%= shopping_bag.user.last_name %>
+										<%= shopping_bag.user.nickname %>
 									</td>
 									<td><%= shopping_bag.created_at.strftime('%Y年%m月%d日') %></td>
 								</tr>
 								<tr>
 									<th>商品情報</th>
 									<th>購入枚数</th>
-									<th>発送ステータス</th>
 									<th>総計</th>
 								</tr>
 								
@@ -72,7 +72,6 @@
 
 										</td>
 										<td><%= bag_item.quantity %>点</td>
-										<td><%= bag_item.delivery_status_id %></td>
 									
 									<%end%>
 									<td><%= (shopping_bag.sum_total_price).to_i %>円</td>

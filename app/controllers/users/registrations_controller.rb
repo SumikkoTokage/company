@@ -26,13 +26,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/edit
    def edit
      @user.avatar.cache! unless @user.avatar.blank?
-     super
+     @user = User.find(current_user.id)
    end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
 
   # DELETE /resource
   # def destroy

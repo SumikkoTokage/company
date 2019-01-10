@@ -1,43 +1,75 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+    <%= render partial: 'products/header' %>
+    <div class="main clearfix">
+        <div class="main-content">
+            <div class="body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h1>プロフィール編集</h1>
+                            <%= form_for(@user) do |f| %>
+                                <div class="field">
+                                  <%= f.label :メールアドレス %><br />
+                                  <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "○○○@gmail.com"  %>
+                                </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+                                <div class="field">
+                                  <%= f.label :ニックネーム %><br />
+                                  <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", placeholder: "ニックネーム" %>
+                                </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+                                <div class="field">
+                                  <%= f.label :性別 %><br />
+                                  <%= f.label :男性 %>
+                                  <%= f.radio_button :gender, :男性 %>
+                                  <%= f.label :女性 %>
+                                  <%= f.radio_button :gender, :女性 %>
+                                </div>
+
+                                <div class="field">
+                                  <%= f.label :アイコン %><br />
+                                  <%= image_tag current_user.avatar.to_s, :size => "255x255" %>
+                                  <%= f.file_field :avatar %>
+                                  <%= f.hidden_field :avatar_cache %>
+                                </div>
+
+                                <%= f.fields_for :address_lines, (@address_line) do |al| %>
+                                  <div class="field">
+                                    <%= al.label :郵便番号 %><br />
+                                    〒<%= al.text_field :postcode, autocomplete: "postcode", placeholder: "○○○-○○○○" %>
+                                  </div>
+                                  <div class="field">
+                                    <%= al.label :都道府県 %><br />
+                                    <%= al.select :prefecture_id, AddressLine.prefecture_ids.keys, {prompt: '選択してください'} %>
+                                  </div>
+                                  <div class="field">
+                                    <%= al.label :市町村 %><br />
+                                    <%= al.text_field :city, autocomplete: "city", placeholder: "○○市" %>
+                                  </div>
+                                  <div class="field">
+                                    <%= al.label :住所 %><br />
+                                    <%= al.text_field :address, autocomplete: "address", placeholder: "○○1-1-1" %>
+                                  </div>
+                                  <div class="field">
+                                    <%= al.label :宛先氏名 %><br />
+                                    <%= al.text_field :name, autocomplete: "name", placeholder: "宛先氏名" %>
+                                  </div>
+                                <%end%>
+
+                                <%= f.submit "変更を保存", class:"btn" %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <p><%= link_to "退会についてはコチラ", users_resignation_path %></p>
+    </div>
   </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+  <%= render partial: 'products/footer' %>
+</body>
+</html>
