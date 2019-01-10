@@ -80,8 +80,8 @@
                         <div class="main clearfix">
                             <div class="main-content">
                                 <h3>ピアス一覧</h3>
-                                <% if @product_piercingss.present? %>
-                                    <% @product_piercingss.each_with_index do |product| %>
+                                <% if @product_piercings.present? %>
+                                    <% @product_piercingps.each_with_index do |product| %>
                                     <div class="product-box">
                                         <%= link_to product_path(product.id) do %>
                                             <%= image_tag product.product_images[0].avatar.to_s, :size => "255x255" %>
